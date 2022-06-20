@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    uses : prism-be/picshare-utils/.github/workflows/cd-docker-dotnet.yaml@main
+    uses: prism-be/picshare-utils/.github/workflows/cd-docker-dotnet.yaml@main
     with:
       dockerFile: TODOPROJECTNAME/Dockerfile
       imageTag: TODOIMAGETAG

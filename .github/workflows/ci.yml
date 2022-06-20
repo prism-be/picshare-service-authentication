@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    uses : prism-be/picshare-utils/.github/workflows/ci-dotnet.yaml@main
+    uses: prism-be/picshare-utils/.github/workflows/ci-dotnet.yaml@main
     with:
       sonarProjectKey: TODOPROJECTSONARKEY
       sonarProjectName: TODOPROJECTSONARNAME

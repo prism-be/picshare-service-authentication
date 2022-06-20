@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Picshare.Services.Authentication", "Prism.Picshare.Services.Authentication\Prism.Picshare.Services.Authentication.csproj", "{4E26842D-0CFE-4F46-8BFC-4FD30DE98951}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Picshare.Services.Authentication.Tests", "Prism.Picshare.Services.Authentication.Tests\Prism.Picshare.Services.Authentication.Tests.csproj", "{1A54CC66-1BA2-44C1-9F95-33F372ADD45B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E26842D-0CFE-4F46-8BFC-4FD30DE98951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E26842D-0CFE-4F46-8BFC-4FD30DE98951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E26842D-0CFE-4F46-8BFC-4FD30DE98951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E26842D-0CFE-4F46-8BFC-4FD30DE98951}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A54CC66-1BA2-44C1-9F95-33F372ADD45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A54CC66-1BA2-44C1-9F95-33F372ADD45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A54CC66-1BA2-44C1-9F95-33F372ADD45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A54CC66-1BA2-44C1-9F95-33F372ADD45B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

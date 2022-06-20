@@ -1,0 +1,13 @@
+﻿<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Dapr" type="RunNativeExe" factoryName="Native Executable">
+        <option name="EXE_PATH" value="$PROJECT_DIR$/../../../../../dapr/dapr.exe"/>
+        <option name="PROGRAM_PARAMETERS"
+                value="run -a picshare-authentication --dapr-http-max-request-size 30 -d ../../dapr/components --app-port 5114 --config ../../dapr/config.yaml -- dotnet run"/>
+        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Prism.Picshare.Services.Authentication"/>
+        <option name="PASS_PARENT_ENVS" value="1"/>
+        <option name="USE_EXTERNAL_CONSOLE" value="0"/>
+        <method v="2">
+            <option name="Build Solution" enabled="true"/>
+        </method>
+    </configuration>
+</component>
