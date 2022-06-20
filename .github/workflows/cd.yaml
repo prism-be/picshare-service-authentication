@@ -1,0 +1,15 @@
+﻿name: CD
+on:
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    uses : prism-be/picshare-utils/.github/workflows/cd-docker-dotnet.yaml@main
+    with:
+      dockerFile: TODOPROJECTNAME/Dockerfile
+      imageTag: TODOIMAGETAG
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

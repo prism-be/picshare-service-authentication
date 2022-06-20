@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    uses : prism-be/picshare-utils/.github/workflows/ci-dotnet.yaml@main
+    with:
+      sonarProjectKey: TODOPROJECTSONARKEY
+      sonarProjectName: TODOPROJECTSONARNAME
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
