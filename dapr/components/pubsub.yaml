@@ -3,10 +3,8 @@ kind: Component
 metadata:
   name: pubsub
 spec:
-  type: pubsub.redis
+  type: pubsub.rabbitmq
   version: v1
   metadata:
-    - name: redisHost
-      value: redis:6379
-    - name: redisPassword
-      value: ""
+    - name: host
+      value: "amqp://picshare:MySuperPassword@rabbit:5672"

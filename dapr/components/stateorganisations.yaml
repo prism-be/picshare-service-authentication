@@ -3,10 +3,18 @@ kind: Component
 metadata:
   name: stateorganisations
 spec:
-  type: state.redis
+  type: state.mongodb
   version: v1
   metadata:
-    - name: redisHost
-      value: redis:6379
-    - name: redisPassword
-      value: ""
+    - name: host
+      value: mongo:27017
+    - name: username
+      value: picshare
+    - name: password
+      value: MySuperPassword
+    - name: databaseName
+      value: picshare
+    - name: collectionName
+      value: organisations
+    - name: params
+      value: ?authSource=admin
