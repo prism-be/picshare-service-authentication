@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dapr.AspNetCore" Version="1.7.0"/>
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.3"/>
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1"/>
-        <PackageReference Include="Prism.Picshare" Version="1.0.5"/>
-        <PackageReference Include="Prism.Picshare.Insights" Version="1.0.0"/>
+        <PackageReference Include="Dapr.AspNetCore" Version="1.7.0" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.3" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Prism.Picshare" Version="1.0.5" />
+        <PackageReference Include="Prism.Picshare.Insights" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

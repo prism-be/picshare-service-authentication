@@ -1,14 +1,14 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file = "Stores.cs" company = "Prism">
+//  <copyright file = "StatusCodes.cs" company = "Prism">
 //  Copyright (c) Prism.All rights reserved.
 //  </copyright>
 // -----------------------------------------------------------------------
 
 namespace Prism.Picshare.Services.Authentication.Configuration;
 
-public static class Stores
+public enum ResponseCodes
 {
-    public const string Commands = "statecommands";
-    public const string Users = "stateusers";
-    public const string Organisations = "stateorganisations";
+    Ok = 0,
+    ExistingOrganisation = 40901,
+    ExistingUsername = 40902,
 }

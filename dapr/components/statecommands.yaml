@@ -7,7 +7,7 @@ spec:
   version: v1
   metadata:
     - name: host
-      value: mongo:27017
+      value: localhost:27017
     - name: username
       value: picshare
     - name: password
