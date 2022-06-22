@@ -50,7 +50,7 @@ public class SubscribeRequestHandler : IRequestHandler<SubscribeRequest, Respons
     {
         var organisationId = await _daprClient.GetStateAsync<Guid>(Stores.OrganisationsName, request.Organisation, cancellationToken: cancellationToken);
 
-        if (organisationId != default)
+        if (organisationId != Guid.Empty)
         {
             return ResponseCodes.ExistingOrganisation;
         }
