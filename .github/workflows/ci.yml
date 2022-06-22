@@ -12,7 +12,7 @@ jobs:
   build:
     uses: prism-be/picshare-utils/.github/workflows/ci-dotnet.yaml@main
     with:
-      sonarProjectKey: TODOPROJECTSONARKEY
-      sonarProjectName: TODOPROJECTSONARNAME
+      sonarProjectKey: prism-be_picshare-services-authentication
+      sonarProjectName: picshare-services-authentication
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

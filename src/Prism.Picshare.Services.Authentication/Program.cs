@@ -9,7 +9,6 @@ using Grpc.Net.Client;
 using MediatR;
 using Prism.Picshare.Behaviors;
 using Prism.Picshare.Insights;
-using Prism.Picshare.Services.Authentication.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 

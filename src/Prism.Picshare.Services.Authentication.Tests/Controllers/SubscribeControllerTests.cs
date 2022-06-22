@@ -7,6 +7,7 @@
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Prism.Picshare.Services.Authentication.Commands;
 using Prism.Picshare.Services.Authentication.Configuration;
@@ -27,8 +28,8 @@ public class SubscribeControllerTests
         mediator.Setup(x => x.Send(It.IsAny<SubscribeRequest>(), default)).ReturnsAsync(code);
 
         // Act
-        var controller = new SubscribeController(mediator.Object);
-        var result = await controller.Subscribe(new SubscribeRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var controller = new SubscribeController(mediator.Object, Mock.Of<ILogger<SubscribeController>>());
+        var result = await controller.Subscribe(new SubscribeRequest(Guid.NewGuid().ToString(),Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
 
         // Assert
         result.Should().BeAssignableTo(responseType);
