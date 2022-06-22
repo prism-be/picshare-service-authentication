@@ -4,8 +4,10 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Prism.Picshare.Services.Authentication.Commands;
 using Prism.Picshare.Services.Authentication.Configuration;
 

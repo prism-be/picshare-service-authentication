@@ -4,7 +4,10 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 using Dapr.Client;
 using FluentValidation;
 using Isopoh.Cryptography.Argon2;
@@ -45,18 +48,16 @@ public class SubscribeRequestHandler : IRequestHandler<SubscribeRequest, Respons
 
     public async Task<ResponseCodes> Handle(SubscribeRequest request, CancellationToken cancellationToken)
     {
-        var organisations = await _daprClient.QueryStateAsync<Organisation>(Stores.Organisations, $" {{ \"filter\" : {{ \"EQ\": {{ \"name\": \"{request.Organisation}\" }} }} }}",
-            cancellationToken: cancellationToken);
+        var organisationId = await _daprClient.GetStateAsync<Guid>(Stores.OrganisationsName, request.Organisation, cancellationToken: cancellationToken);
 
-        if (organisations?.Results.Any() == true)
+        if (organisationId != default)
         {
             return ResponseCodes.ExistingOrganisation;
         }
 
-        var users = await _daprClient.QueryStateAsync<User>(Stores.Users, $" {{ \"filter\" : {{ \"EQ\": {{ \"login\": \"{request.Login}\" }} }} }}",
-            cancellationToken: cancellationToken);
+        var credentials = await _daprClient.GetStateAsync<Credentials>(Stores.Credentials, request.Login, cancellationToken: cancellationToken);
 
-        if (users?.Results.Any() == true)
+        if (credentials != default)
         {
             return ResponseCodes.ExistingUsername;
         }
@@ -67,19 +68,26 @@ public class SubscribeRequestHandler : IRequestHandler<SubscribeRequest, Respons
             Name = request.Organisation
         };
 
-        var user = new User
+        credentials = new Credentials
         {
-            Id = Guid.NewGuid(),
-            OrganisationId = organisation.Id,
-            Email = request.Email,
+            Id = Security.GenerateIdentifier(),
             Login = request.Login,
-            EmailValidated = false,
             PasswordHash = Argon2.Hash(request.Password)
         };
 
+        var user = new User
+        {
+            Id = credentials.Id,
+            OrganisationId = organisation.Id,
+            Email = request.Email,
+            EmailValidated = false
+        };
+
+        await _daprClient.SaveStateAsync(Stores.OrganisationsName, organisation.Name, organisation.Id, cancellationToken: cancellationToken);
         await _daprClient.SaveStateAsync(Stores.Organisations, organisation.Id.ToString(), organisation, cancellationToken: cancellationToken);
+        await _daprClient.SaveStateAsync(Stores.Credentials, credentials.Login, credentials, cancellationToken: cancellationToken);
         await _daprClient.SaveStateAsync(Stores.Users, user.Key, user, cancellationToken: cancellationToken);
-        await _daprClient.PublishEventAsync(DaprConfiguration.PubSub, Topics.User.Register, user, cancellationToken: cancellationToken);
+        await _daprClient.PublishEventAsync(DaprConfiguration.PubSub, Topics.User.Register, user, cancellationToken);
 
         return ResponseCodes.Ok;
     }

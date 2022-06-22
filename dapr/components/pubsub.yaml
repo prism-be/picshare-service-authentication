@@ -7,4 +7,4 @@ spec:
   version: v1
   metadata:
     - name: host
-      value: "amqp://picshare:MySuperPassword@rabbit:5672"
+      value: "amqp://picshare:MySuperPassword@localhost:5672"

@@ -40,16 +40,12 @@ public class SubscribeRequestTests
     {
         // Arrange
         var daprClient = new Mock<DaprClient>();
-        var items = new List<StateQueryItem<Organisation>>
-        {
-            new(Guid.NewGuid().ToString(), new Organisation(), Guid.NewGuid().ToString(), null)
-        };
-        daprClient.Setup(x => x.QueryStateAsync<Organisation>(Stores.Organisations, It.IsAny<string>(), It.IsAny<IReadOnlyDictionary<string, string>>(), default))
-            .ReturnsAsync(new StateQueryResponse<Organisation>(new List<StateQueryItem<Organisation>>(items), null, null));
+        var organisationName = Guid.NewGuid().ToString();
+        daprClient.SetupGetStateAsync(Stores.OrganisationsName, organisationName, Guid.NewGuid());
 
         // Act
         var handler = new SubscribeRequestHandler(daprClient.Object);
-        var result = await handler.Handle(new SubscribeRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()),
+        var result = await handler.Handle(new SubscribeRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), organisationName),
             CancellationToken.None);
 
         // Assert
@@ -62,15 +58,7 @@ public class SubscribeRequestTests
         // Arrange
         var login = Guid.NewGuid().ToString();
         var daprClient = new Mock<DaprClient>();
-        var items = new List<StateQueryItem<User>>
-        {
-            new(Guid.NewGuid().ToString(), new User
-            {
-                Login = login
-            }, Guid.NewGuid().ToString(), null)
-        };
-        daprClient.Setup(x => x.QueryStateAsync<User>(Stores.Users, It.IsAny<string>(), It.IsAny<IReadOnlyDictionary<string, string>>(), default))
-            .ReturnsAsync(new StateQueryResponse<User>(new List<StateQueryItem<User>>(items), null, null));
+        daprClient.SetupGetStateAsync(Stores.Credentials, login, new Credentials());
 
         // Act
         var handler = new SubscribeRequestHandler(daprClient.Object);

@@ -8,7 +8,8 @@ namespace Prism.Picshare.Services.Authentication.Configuration;
 
 public static class Stores
 {
-    public const string Commands = "statecommands";
+    public const string Credentials = "statecredentials";
     public const string Users = "stateusers";
     public const string Organisations = "stateorganisations";
+    public const string OrganisationsName = "stateorganisationsnames";
 }

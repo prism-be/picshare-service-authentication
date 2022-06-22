@@ -11,6 +11,11 @@ namespace Prism.Picshare.Services.Authentication.Tests;
 
 public static class TestsExtensions
 {
+    public static void SetupGetStateAsync<T>(this Mock<DaprClient> mock, string store, string key, T data)
+    {
+        mock.Setup(x => x.GetStateAsync<T>(store, key, null, null, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(data);
+    }
 
     public static void VerifyPublishEvent<TExpected>(this Mock<DaprClient> mock, string expectedPubsub, string expectedTopic)
     {

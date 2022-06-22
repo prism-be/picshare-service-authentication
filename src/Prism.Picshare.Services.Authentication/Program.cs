@@ -7,6 +7,8 @@
 using FluentValidation;
 using Grpc.Net.Client;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Prism.Picshare.Behaviors;
 using Prism.Picshare.Insights;
 
@@ -15,7 +17,6 @@ var builder = WebApplication.CreateBuilder(args);
 var applicationAssembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(applicationAssembly);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(SaveCommandBehaviour<,>));
 builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
 builder.Services.AddInsights();
