@@ -6,10 +6,10 @@ on:
 
 jobs:
   publish:
-    uses : prism-be/picshare-utils/.github/workflows/cd-docker-dotnet.yaml@main
+    uses: prism-be/picshare-utils/.github/workflows/cd-docker-dotnet.yaml@main
     with:
-      dockerFile: TODOPROJECTNAME/Dockerfile
-      imageTag: TODOIMAGETAG
+      dockerFile: Prism.Picshare.Services.Authentication/Dockerfile
+      imageTag: service-authentication
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

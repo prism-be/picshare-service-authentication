@@ -1,0 +1,20 @@
+﻿apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: stateusers
+spec:
+  type: state.mongodb
+  version: v1
+  metadata:
+    - name: host
+      value: localhost:27017
+    - name: username
+      value: picshare
+    - name: password
+      value: MySuperPassword
+    - name: databaseName
+      value: picshare
+    - name: collectionName
+      value: users
+    - name: params
+      value: ?authSource=admin

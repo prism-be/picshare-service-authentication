@@ -19,4 +19,4 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "TODOPROJECTNAME.dll"]
+ENTRYPOINT ["dotnet", "Prism.Picshare.Services.Authentication.dll"]

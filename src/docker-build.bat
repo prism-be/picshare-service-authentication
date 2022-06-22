@@ -1,1 +1,1 @@
-docker build . --file Prism.Picshare.Services.Photobooth.Live/Dockerfile --tag simonbaudart/picshare:service-photobooth-live-dev --build-arg NUGET_AUTH_TOKEN=%1
+docker build . --file Prism.Picshare.Services.Authentication/Dockerfile --tag simonbaudart/picshare:service-authentication-latest --build-arg NUGET_AUTH_TOKEN=%1

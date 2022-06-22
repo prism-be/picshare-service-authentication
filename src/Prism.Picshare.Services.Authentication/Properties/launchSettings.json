@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "Prism.Picshare.Services.Authentication": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5114",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
