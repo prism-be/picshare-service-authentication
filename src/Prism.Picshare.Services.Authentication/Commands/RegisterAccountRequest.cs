@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file = "SubscribeRequest.cs" company = "Prism">
+//  <copyright file = "RegisterAccountRequest.cs" company = "Prism">
 //  Copyright (c) Prism.All rights reserved.
 //  </copyright>
 // -----------------------------------------------------------------------
@@ -18,7 +18,7 @@ using Prism.Picshare.Services.Authentication.Configuration;
 
 namespace Prism.Picshare.Services.Authentication.Commands;
 
-public record SubscribeRequest(
+public record RegisterAccountRequest(
     [property: JsonPropertyName("login")] string Login,
     [property: JsonPropertyName("email")] string Email,
     [property: JsonPropertyName("password")]
@@ -26,9 +26,9 @@ public record SubscribeRequest(
     [property: JsonPropertyName("organisation")]
     string Organisation) : IRequest<ResponseCodes>;
 
-public class SubscribeRequestValidator : AbstractValidator<SubscribeRequest>
+public class RegisterAccountRequestValidator : AbstractValidator<RegisterAccountRequest>
 {
-    public SubscribeRequestValidator()
+    public RegisterAccountRequestValidator()
     {
         RuleFor(x => x.Organisation).NotEmpty().MaximumLength(Constants.MaxShortStringLength);
         RuleFor(x => x.Login).NotEmpty().MaximumLength(Constants.MaxShortStringLength);
@@ -37,16 +37,16 @@ public class SubscribeRequestValidator : AbstractValidator<SubscribeRequest>
     }
 }
 
-public class SubscribeRequestHandler : IRequestHandler<SubscribeRequest, ResponseCodes>
+public class RegisterAccountRequestHandler : IRequestHandler<RegisterAccountRequest, ResponseCodes>
 {
     private readonly DaprClient _daprClient;
 
-    public SubscribeRequestHandler(DaprClient daprClient)
+    public RegisterAccountRequestHandler(DaprClient daprClient)
     {
         _daprClient = daprClient;
     }
 
-    public async Task<ResponseCodes> Handle(SubscribeRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseCodes> Handle(RegisterAccountRequest request, CancellationToken cancellationToken)
     {
         var organisationId = await _daprClient.GetStateAsync<Guid>(Stores.OrganisationsName, request.Organisation, cancellationToken: cancellationToken);
 

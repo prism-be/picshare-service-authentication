@@ -23,7 +23,7 @@ public class LoginController : Controller
     }
 
     [HttpPost("/api/authentication/register")]
-    public async Task<IActionResult> Register([FromBody] SubscribeRequest request)
+    public async Task<IActionResult> Register([FromBody] RegisterAccountRequest request)
     {
         _logger.LogInformation("Processing incoming request : subscribe - {login} - {organisation}", request.Login, request.Organisation);
         
