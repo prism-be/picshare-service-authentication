@@ -14,7 +14,7 @@ using Prism.Picshare.Services.Authentication.Configuration;
 
 namespace Prism.Picshare.Services.Authentication.Tests.Commands;
 
-public class SubscribeRequestTests
+public class RegisterAccountRequestTests
 {
 
     [Fact]
@@ -25,8 +25,9 @@ public class SubscribeRequestTests
         var daprClient = new Mock<DaprClient>();
 
         // Act
-        var handler = new SubscribeRequestHandler(daprClient.Object);
-        var result = await handler.Handle(new SubscribeRequest(login, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()), CancellationToken.None);
+        var handler = new RegisterAccountRequestHandler(daprClient.Object);
+        var result = await handler.Handle(new RegisterAccountRequest(login, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()),
+            CancellationToken.None);
 
         // Assert
         result.Should().Be(ResponseCodes.Ok);
@@ -44,8 +45,9 @@ public class SubscribeRequestTests
         daprClient.SetupGetStateAsync(Stores.OrganisationsName, organisationName, Guid.NewGuid());
 
         // Act
-        var handler = new SubscribeRequestHandler(daprClient.Object);
-        var result = await handler.Handle(new SubscribeRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), organisationName),
+        var handler = new RegisterAccountRequestHandler(daprClient.Object);
+        var result = await handler.Handle(
+            new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), organisationName),
             CancellationToken.None);
 
         // Assert
@@ -61,8 +63,9 @@ public class SubscribeRequestTests
         daprClient.SetupGetStateAsync(Stores.Credentials, login, new Credentials());
 
         // Act
-        var handler = new SubscribeRequestHandler(daprClient.Object);
-        var result = await handler.Handle(new SubscribeRequest(login, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()), CancellationToken.None);
+        var handler = new RegisterAccountRequestHandler(daprClient.Object);
+        var result = await handler.Handle(new RegisterAccountRequest(login, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()),
+            CancellationToken.None);
 
         // Assert
         result.Should().Be(ResponseCodes.ExistingUsername);
@@ -72,10 +75,11 @@ public class SubscribeRequestTests
     public void Validator_Invalid_Email()
     {
         // Arrange
-        var validator = new SubscribeRequestValidator();
+        var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new SubscribeRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
+            Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -85,10 +89,10 @@ public class SubscribeRequestTests
     public void Validator_Missing_Email()
     {
         // Arrange
-        var validator = new SubscribeRequestValidator();
+        var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new SubscribeRequest(Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -98,10 +102,23 @@ public class SubscribeRequestTests
     public void Validator_Missing_Login()
     {
         // Arrange
-        var validator = new SubscribeRequestValidator();
+        var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new SubscribeRequest(string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+
+        // Assert
+        result.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public void Validator_Missing_Name()
+    {
+        // Arrange
+        var validator = new RegisterAccountRequestValidator();
+
+        // Act
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -111,10 +128,10 @@ public class SubscribeRequestTests
     public void Validator_Missing_Organisation()
     {
         // Arrange
-        var validator = new SubscribeRequestValidator();
+        var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new SubscribeRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -124,10 +141,10 @@ public class SubscribeRequestTests
     public void Validator_Missing_Password()
     {
         // Arrange
-        var validator = new SubscribeRequestValidator();
+        var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new SubscribeRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -137,10 +154,11 @@ public class SubscribeRequestTests
     public void Validator_Ok()
     {
         // Arrange
-        var validator = new SubscribeRequestValidator();
+        var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new SubscribeRequest(Guid.NewGuid().ToString(), "hello@pichsare.me", Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), "hello@pichsare.me", Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
+            Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeTrue();

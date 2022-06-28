@@ -25,11 +25,11 @@ public class LoginControllerTests
     {
         // Arrange
         var mediator = new Mock<IMediator>();
-        mediator.Setup(x => x.Send(It.IsAny<SubscribeRequest>(), default)).ReturnsAsync(code);
+        mediator.Setup(x => x.Send(It.IsAny<RegisterAccountRequest>(), default)).ReturnsAsync(code);
 
         // Act
         var controller = new LoginController(mediator.Object, Mock.Of<ILogger<LoginController>>());
-        var result = await controller.Register(new SubscribeRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = await controller.Register(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
 
         // Assert
         result.Should().BeAssignableTo(responseType);
