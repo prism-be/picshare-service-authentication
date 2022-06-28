@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file = "RegisterAccountRequestTests.cs" company = "Prism">
+//  <copyright file = "SubscribeRequestTests.cs" company = "Prism">
 //  Copyright (c) Prism.All rights reserved.
 //  </copyright>
 // -----------------------------------------------------------------------
@@ -26,7 +26,8 @@ public class RegisterAccountRequestTests
 
         // Act
         var handler = new RegisterAccountRequestHandler(daprClient.Object);
-        var result = await handler.Handle(new RegisterAccountRequest(login, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()), CancellationToken.None);
+        var result = await handler.Handle(new RegisterAccountRequest(login, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()),
+            CancellationToken.None);
 
         // Assert
         result.Should().Be(ResponseCodes.Ok);
@@ -45,7 +46,8 @@ public class RegisterAccountRequestTests
 
         // Act
         var handler = new RegisterAccountRequestHandler(daprClient.Object);
-        var result = await handler.Handle(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), organisationName),
+        var result = await handler.Handle(
+            new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), organisationName),
             CancellationToken.None);
 
         // Assert
@@ -62,7 +64,8 @@ public class RegisterAccountRequestTests
 
         // Act
         var handler = new RegisterAccountRequestHandler(daprClient.Object);
-        var result = await handler.Handle(new RegisterAccountRequest(login, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()), CancellationToken.None);
+        var result = await handler.Handle(new RegisterAccountRequest(login, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()),
+            CancellationToken.None);
 
         // Assert
         result.Should().Be(ResponseCodes.ExistingUsername);
@@ -75,7 +78,8 @@ public class RegisterAccountRequestTests
         var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
+            Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -88,7 +92,7 @@ public class RegisterAccountRequestTests
         var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -101,7 +105,20 @@ public class RegisterAccountRequestTests
         var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new RegisterAccountRequest(string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+
+        // Assert
+        result.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public void Validator_Missing_Name()
+    {
+        // Arrange
+        var validator = new RegisterAccountRequestValidator();
+
+        // Act
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -114,7 +131,7 @@ public class RegisterAccountRequestTests
         var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -127,7 +144,7 @@ public class RegisterAccountRequestTests
         var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), string.Empty, Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -140,7 +157,8 @@ public class RegisterAccountRequestTests
         var validator = new RegisterAccountRequestValidator();
 
         // Act
-        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), "hello@pichsare.me", Guid.NewGuid().ToString(), Guid.NewGuid().ToString()));
+        var result = validator.Validate(new RegisterAccountRequest(Guid.NewGuid().ToString(), "hello@pichsare.me", Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
+            Guid.NewGuid().ToString()));
 
         // Assert
         result.IsValid.Should().BeTrue();

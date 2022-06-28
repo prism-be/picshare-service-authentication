@@ -21,6 +21,7 @@ namespace Prism.Picshare.Services.Authentication.Commands;
 public record RegisterAccountRequest(
     [property: JsonPropertyName("login")] string Login,
     [property: JsonPropertyName("email")] string Email,
+    [property: JsonPropertyName("name")] string Name,
     [property: JsonPropertyName("password")]
     string Password,
     [property: JsonPropertyName("organisation")]
@@ -32,6 +33,7 @@ public class RegisterAccountRequestValidator : AbstractValidator<RegisterAccount
     {
         RuleFor(x => x.Organisation).NotEmpty().MaximumLength(Constants.MaxShortStringLength);
         RuleFor(x => x.Login).NotEmpty().MaximumLength(Constants.MaxShortStringLength);
+        RuleFor(x => x.Name).NotEmpty().MaximumLength(Constants.MaxShortStringLength);
         RuleFor(x => x.Email).NotEmpty().MaximumLength(Constants.MaxShortStringLength).EmailAddress();
         RuleFor(x => x.Password).NotEmpty().MaximumLength(Constants.MaxShortStringLength);
     }
@@ -80,7 +82,8 @@ public class RegisterAccountRequestHandler : IRequestHandler<RegisterAccountRequ
             Id = credentials.Id,
             OrganisationId = organisation.Id,
             Email = request.Email,
-            EmailValidated = false
+            EmailValidated = false,
+            Name = request.Name
         };
 
         await _daprClient.SaveStateAsync(Stores.OrganisationsName, organisation.Name, organisation.Id, cancellationToken: cancellationToken);
