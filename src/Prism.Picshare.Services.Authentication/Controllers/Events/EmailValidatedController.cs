@@ -9,10 +9,12 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Prism.Picshare.Domain;
 using Prism.Picshare.Events;
+using Prism.Picshare.Services.Authentication.Commands;
+using Prism.Picshare.Services.Authentication.Configuration;
 
 namespace Prism.Picshare.Services.Authentication.Controllers.Events;
 
-public class EmailValidatedController
+public class EmailValidatedController: Controller
 {
     private readonly IMediator _mediator;
 
@@ -23,8 +25,10 @@ public class EmailValidatedController
 
     [Topic(DaprConfiguration.PubSub, Topics.Email.Validated)]
     [HttpPost(Topics.RoutePrefix + Topics.Email.Validated)]
-    public Task<IActionResult> Validate(User user)
+    public async Task<IActionResult> Validate(User user)
     {
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new EmailValidationRequest(user.OrganisationId, user.Id));
+
+        return result == ResponseCodes.Ok ? Ok() : NotFound();
     }
 }

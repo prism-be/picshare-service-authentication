@@ -24,11 +24,6 @@ public class EmailValidationRequestTests
         var daprClient = new Mock<DaprClient>();
 
         var request = new EmailValidationRequest(Guid.NewGuid(), Guid.NewGuid());
-        daprClient.SetupGetStateAsync(Stores.Users, EntityReference.ComputeKey(request.OrganisationId, request.UserId), new User
-        {
-            OrganisationId = request.OrganisationId,
-            Id = request.UserId
-        });
 
         // Act
         var handler = new EmailValidationRequestHandler(logger.Object, daprClient.Object);
