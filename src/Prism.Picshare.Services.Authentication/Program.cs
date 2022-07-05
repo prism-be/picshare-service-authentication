@@ -7,8 +7,6 @@
 using FluentValidation;
 using Grpc.Net.Client;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Picshare.Behaviors;
 using Prism.Picshare.Insights;
 
@@ -19,7 +17,7 @@ builder.Services.AddMediatR(applicationAssembly);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
-builder.Services.AddInsights();
+builder.Logging.AddInsights();
 
 builder.Services.AddDaprClient(config =>
 {
@@ -34,6 +32,8 @@ builder.Services.AddHealthChecks();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+app.UseExceptionLogger();
 
 app.MapSubscribeHandler();
 app.UseCloudEvents();

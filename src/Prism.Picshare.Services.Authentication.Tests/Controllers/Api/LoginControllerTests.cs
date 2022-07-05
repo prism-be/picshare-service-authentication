@@ -11,9 +11,9 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Prism.Picshare.Services.Authentication.Commands;
 using Prism.Picshare.Services.Authentication.Configuration;
-using Prism.Picshare.Services.Authentication.Controllers;
+using Prism.Picshare.Services.Authentication.Controllers.Api;
 
-namespace Prism.Picshare.Services.Authentication.Tests.Controllers;
+namespace Prism.Picshare.Services.Authentication.Tests.Controllers.Api;
 
 public class LoginControllerTests
 {

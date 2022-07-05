@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Prism.Picshare.Services.Authentication.Commands;
 using Prism.Picshare.Services.Authentication.Configuration;
 
-namespace Prism.Picshare.Services.Authentication.Controllers;
+namespace Prism.Picshare.Services.Authentication.Controllers.Api;
 
 public class LoginController : Controller
 {
